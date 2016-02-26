@@ -1,5 +1,4 @@
-#ifndef sparse_table_hpp
-#define sparse_table_hpp
+#pragma once
 
 #include <cinttypes>
 #include <cmath>
@@ -60,5 +59,3 @@ Type SparseTable<Type>::get(int64_t left, int64_t right) const {
   auto second = this->table[deg][right - (1 << deg) + 1];
   return std::min(first, second);
 }
-
-#endif /* sparse_table_hpp */

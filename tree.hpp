@@ -1,13 +1,9 @@
-#ifndef tree_hpp
-#define tree_hpp
-
+#pragma once
 
 template <typename Type>
 class TreeNode {
 public:
   TreeNode();
-  // TreeNode(const Type& val, TreeNode<Type>* p = nullptr,
-  //   TreeNode<Type>* l = nullptr, TreeNode<Type>* r = nullptr);
   ~TreeNode();
   Type value;
   TreeNode<Type>* left;
@@ -22,15 +18,6 @@ TreeNode<Type>::TreeNode() {
   this->right = nullptr;
   this->parent = nullptr;
 }
-
-// template <typename Type>
-// TreeNode<Type>::TreeNode(const Type& val, TreeNode<Type>* p,
-//   TreeNode<Type>* l, TreeNode<Type>* r) {
-//   this->value = val;
-//   this->left = l;
-//   this->right = r;
-//   this->parent = p;
-// }
 
 template <typename Type>
 TreeNode<Type>::~TreeNode() {
@@ -51,5 +38,3 @@ TreeNode<Type>::~TreeNode() {
     this->right = nullptr;
   }
 }
-
-#endif /* tree_hpp */

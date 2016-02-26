@@ -1,5 +1,4 @@
-#ifndef heap_hpp
-#define heap_hpp
+#pragma once
 
 #include <cstddef>
 
@@ -144,5 +143,3 @@ size_t Heap<Type>::child(size_t iter, size_t number) const {
   }
   return ans;
 }
-
-#endif /* heap_hpp */

@@ -1,5 +1,4 @@
-#ifndef segment_tree_hpp
-#define segment_tree_hpp
+#pragma once
 
 #include <cinttypes>
 #include "tree.hpp"
@@ -112,5 +111,3 @@ UINT get_max_lower_pow2(UINT n) {
   }
   return res;
 }
-
-#endif /* segment_tree_hpp */

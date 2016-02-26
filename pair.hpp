@@ -1,5 +1,4 @@
-#ifndef pair_hpp
-#define pair_hpp
+#pragma once
 
 template <typename TypeA, typename TypeB>
 class Pair {
@@ -22,5 +21,3 @@ Pair<TypeA, TypeB>::Pair(const TypeA& a, const TypeB& b) {
 
 template <typename TypeA, typename TypeB>
 Pair<TypeA, TypeB>::~Pair() {}
-
-#endif /* pair_hpp */
