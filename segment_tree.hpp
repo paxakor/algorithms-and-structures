@@ -86,11 +86,6 @@ Type SegmentTree<Type>::get(uint64_t left, uint64_t right, TreeNode<NodeType>* n
   } else if (left <= node->value.left && node->value.right <= right) {
     res = node->value.value;
   } else {
-    // res = get(left, left + (right - left) / 2, node->child_left) + \
-    //   get(left, left + (right - left) / 2, node->child_right) + \
-    //   get(left + (right - left) / 2, right, node->child_left) + \
-    //   get(left + (right - left) / 2, right, node->child_right);
-
     res = get(left, right, node->child_left) + \
       get(left, right, node->child_right);
   }
@@ -99,12 +94,12 @@ Type SegmentTree<Type>::get(uint64_t left, uint64_t right, TreeNode<NodeType>* n
 
 template <typename UINT>
 UINT get_max_lower_pow2(UINT n) {
-  --n;
   UINT res;
-  if (n < 1) {
+  if (n < 2) {
     res = 0;
   } else {
     res = 1;
+    --n;
     while ((n = n >> 1) > 0) {
       res = res << 1;
     }
