@@ -1,5 +1,4 @@
-#ifndef node_hpp
-#define node_hpp
+#pragma once
 
 #include <cstdio>
 
@@ -134,5 +133,3 @@ template <typename Type>
 Node<Type>* Node<Type>::next() {
     return this->next_var;
 }
-
-#endif /* node_hpp */

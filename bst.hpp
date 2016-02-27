@@ -1,5 +1,4 @@
-#ifndef bst_hpp
-#define bst_hpp
+#pragma once
 
 #include <cstddef>
 #include "tree.hpp"
@@ -164,5 +163,3 @@ TreeNode<Type>* BST<Type>::upper_bound(TreeNode<Type>* v) const {
   }
   return v;
 }
-
-#endif /* bst_hpp */

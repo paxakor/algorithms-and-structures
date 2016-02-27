@@ -1,5 +1,4 @@
-#ifndef skip_list_hpp
-#define skip_list_hpp
+#pragma once
 
 #include <cstdlib>
 #include <ctime>
@@ -83,5 +82,3 @@ template <typename Type>
 Type SkipList<Type>::lower_bound(const Type&) const{
 
 }
-
-#endif /* skip_list_hpp */

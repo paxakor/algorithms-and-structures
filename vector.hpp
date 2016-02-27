@@ -1,8 +1,7 @@
-#ifndef vector_hpp
-#define vector_hpp
+#pragma once
 
 #include <cinttypes>
-#define BASE_CAPACITY 2
+#include "algo_base.hpp"
 
 template <typename Type>
 class Vector {
@@ -17,7 +16,7 @@ public:
   void clear();
   void resize(size_t);
   Type& operator[](size_t) const;
-  Type at(size_t) const;
+  Type& at(size_t) const;
   Type front() const;
   Type back() const;
   void erase(size_t);
@@ -25,29 +24,33 @@ public:
   size_t find(const Type&) const;
   size_t size() const;
   size_t capacity() const;
-private:
+protected:
   Type* data_old;
-  Type* data_new;
   size_t size_var;
   size_t capacity_var;
+
+  static const size_t BASE_CAPACITY = 2;
 };
 
 template <typename Type>
-Vector<Type>::Vector(size_t n) {
-  this->capacity_var = n;
-  this->data_old = new Type[this->capacity_var];
-  this->data_new = new Type[this->capacity_var * 2];
-  this->size_var = 0;
-}
+Vector<Type>::Vector()
+  : data_old(new Type[BASE_CAPACITY])
+  , size_var(0)
+  , capacity_var(BASE_CAPACITY)
+{}
 
 template <typename Type>
-Vector<Type>::Vector() {
-  *this = Vector(BASE_CAPACITY);
-}
+Vector<Type>::Vector(size_t n)
+  : data_old(new Type[n])
+  , size_var(n)
+  , capacity_var(n)
+{}
 
 template <typename Type>
-Vector<Type>::Vector(size_t n, const Type& val) {
-  *this = Vector(n);
+Vector<Type>::Vector(size_t n, const Type& val)
+  : data_old(new Type[n])
+  , size_var(n)
+  , capacity_var(n) {
   for (size_t i = 0; i < n; ++i) {
     this->data_old[i] = val;
   }
@@ -76,9 +79,10 @@ bool Vector<Type>::empty() const {
 
 template <typename Type>
 void Vector<Type>::clear() {
-  this->size_var = 0;
   delete[] this->data_old;
-  this->Vector();
+  this->data_old = new Type[BASE_CAPACITY];
+  this->size_var = 0;
+  this->capacity_var = BASE_CAPACITY;
 }
 
 template <typename Type>
@@ -89,16 +93,17 @@ void Vector<Type>::resize(size_t new_capacity) {
   }
   delete[] this->data_old;
   this->data_old = new_data;
+  this->size_var = min(this->size_var, new_capacity);
   this->capacity_var = new_capacity;
 }
 
 template <typename Type>
 Type& Vector<Type>::operator[](size_t index) const {
-  return this->data_old[index];
+  return this->at(index);
 }
 
 template <typename Type>
-Type Vector<Type>::at(size_t index) const {
+Type& Vector<Type>::at(size_t index) const {
   return this->data_old[index];
 }
 
@@ -109,8 +114,7 @@ Type Vector<Type>::front() const {
 
 template <typename Type>
 Type Vector<Type>::back() const {
-  // return this->data_old[this->size_var == 0 ? 0 : this->size_var - 1];
-  return this->data_old[max(this->size_var - 1, 0)];
+  return this->data_old[this->size_var == 0 ? 0 : this->size_var - 1];
 }
 
 template <typename Type>
@@ -128,7 +132,7 @@ void Vector<Type>::erase(size_t index_l, size_t index_r) {
     index_r = tmp;
   }
   index_r = index_r < this->capacity_var ? index_r : this->capacity_var - 1;
-  size_t diff = index_r - index_l;
+  this->size_var -= index_r - index_l;
   for (size_t i = 0; index_r + i < this->capacity_var; ++i) {
     this->data_old[index_l + i] = this->data_old[index_r + i];
   }
@@ -153,5 +157,3 @@ size_t Vector<Type>::find(const Type& val) const {
   }
   return this->size_var;
 }
-
-#endif /* vector_hpp */
