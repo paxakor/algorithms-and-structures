@@ -10,7 +10,6 @@ bool dice(double p) {
     return ((rand() % 10001) / 10000.0 < p);
 }
 
-
 template <typename Type>
 class SkipList {
 public:
@@ -28,10 +27,10 @@ public:
     void add(const Type&);
     void del(const Type&);
 
-protected:
+private:
     List< List<Type> > data;
     List<Type> main_list;
-    double probability;
+    const double probability;
 };
 
 template <typename Type>

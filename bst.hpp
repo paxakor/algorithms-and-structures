@@ -35,7 +35,7 @@ BST<Type>::~BST() {
 
 template <typename Type>
 void BST<Type>::add(const Type& val) {
-  if (this->find(val)) {
+  if (this->find(val) && !this->empty) {
     return;
   }
   if (this->empty) {
