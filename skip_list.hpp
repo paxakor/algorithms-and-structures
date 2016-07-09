@@ -1,83 +1,63 @@
 #pragma once
 
-#include <cstdlib>
-#include <ctime>
+#include <random>
 #include "list.hpp"
 #include "pair.hpp"
 
-bool dice(double p) {
-    srand(time(NULL));
-    return ((rand() % 10001) / 10000.0 < p);
-}
+namespace pkr {
+
+class Random {
+public:
+  Random(double p)
+    : _rd()
+    , _gen(rd())
+    , _dis(p) {}
+  bool get() const {
+    return _dis(_gen);
+  }
+
+private:
+  std::random_device _rd;
+  std::mt19937 _gen;
+  std::bernoulli_distribution _dis;
+};
+
+template <typename Type>
+class SkipListNode {
+public:
+  SkipListNode();
+  ~SkipListNode();
+  
+};
 
 template <typename Type>
 class SkipList {
 public:
-    SkipList();
-    SkipList(double);
-    SkipList(const List<Type>&);
-    SkipList(const List<Type>&, double);
-    SkipList(const SkipList<Type>&);
-    ~SkipList();
-
-    Node<Type>* begin() const;
-    Node<Type>* end() const;
-    Node<Type>* find(const Type&) const;
-    Type lower_bound(const Type&) const;
-    void add(const Type&);
-    void del(const Type&);
+  SkipList(double = 0.5);
+  void add(const Type&);
+  void del(const Type&);
+  bool find(const Type&) const;
 
 private:
-    List< List<Type> > data;
-    List<Type> main_list;
-    const double probability;
+  List< List<Type> > data;
+  static const Random rnd;
 };
 
 template <typename Type>
-SkipList<Type>::SkipList() {
-    this->probability = 0.5;
-}
+SkipList<Type>::SkipList(double p)
+  : rnd(p) {}
 
 template <typename Type>
-SkipList<Type>::SkipList(double p) {
-    this->probability = p;
-}
-
-template <typename Type>
-SkipList<Type>::SkipList(const List<Type>& another_list) {
-    this->probability = 0.5;
-    this->main_list = another_list;
+void SkipList<Type>::add(const Type& val) {
 
 }
 
 template <typename Type>
-SkipList<Type>::SkipList(const List<Type>& arr, double p) {
-    this->probability = p;
+void SkipList<Type>::del(const Type& val) {
 
 }
 
 template <typename Type>
-SkipList<Type>::SkipList(const SkipList<Type>& list) {
-    this->probability = list.probability;
-    this->data = list.data;
-    this->main_list = list.main_list;
-}
-
-template <typename Type>
-SkipList<Type>::~SkipList() {}
-
-
-template <typename Type>
-void SkipList<Type>::add(const Type&) {
-
-}
-
-template <typename Type>
-void SkipList<Type>::del(const Type&) {
-
-}
-
-template <typename Type>
-Type SkipList<Type>::lower_bound(const Type&) const{
+void SkipList<Type>::find(const Type& val) const {
 
 }

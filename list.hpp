@@ -13,6 +13,7 @@ public:
   ListNode<Type>* begin() const;
   ListNode<Type>* end() const;
   ListNode<Type>* find(const Type&) const;
+  void clear();
   void push_front(const Type&);
   void push_back(const Type&);
   void insert_before(ListNode<Type>*, const Type&);
@@ -61,9 +62,17 @@ List<Type>::List()
 
 template <typename Type>
 List<Type>::~List() {
+  clear();
+}
+
+template <typename Type>
+void List<Type>::clear() {
   if (_begin != nullptr) {
     delete _begin;
   }
+  _begin = nullptr;
+  _end = nullptr;
+  _size = 0;
 }
 
 template <typename Type>

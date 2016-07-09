@@ -53,7 +53,8 @@ SegmentTree<Type>::SegmentTree(const Type* const array, uint64_t len) {
 
       if (2 * i + 1 < prev_len) {
         lvl[i].child_right = &prev[2 * i + 1];
-        lvl[i].value.value = prev[2 * i].value.value + prev[2 * i + 1].value.value;
+        lvl[i].value.value = prev[2 * i].value.value +
+                             prev[2 * i + 1].value.value;
         lvl[i].value.right = prev[2 * i + 1].value.right;
         prev[2 * i + 1].parent = &lvl[i];
       } else {
@@ -79,7 +80,8 @@ Type SegmentTree<Type>::get(uint64_t left, uint64_t right) {
 }
 
 template <typename Type>
-Type SegmentTree<Type>::get(uint64_t left, uint64_t right, TreeNode<NodeType>* node) {
+Type SegmentTree<Type>::get(uint64_t left, uint64_t right,
+                            TreeNode<NodeType>* node) {
   Type res;
   if (node->value.right <= left || right <= node->value.left) {
     res = Type();
