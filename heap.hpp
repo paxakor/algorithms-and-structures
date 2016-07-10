@@ -39,7 +39,7 @@ private:
   inline size_t parent(size_t) const;
   inline size_t child(size_t, size_t) const;
 
-  size_t _k = 2;  // TODO: can it be const?
+  const size_t _k = 2;
   std::vector<Type> _data;
 };
 
