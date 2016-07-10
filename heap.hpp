@@ -1,145 +1,120 @@
 #pragma once
 
 #include <cstddef>
+#include <functional>
+#include <vector>
 
-template <typename Type>
+namespace pkr {
+
+template <typename Type, class Compare = std::less<Type> >
 class Heap {
 public:
-  Heap();
-  Heap(const Type* const, const size_t, const size_t);
-  ~Heap();
-  Type get_max() const;
-  void add(const Type&);
-  void del_max();
+  Heap() = default;
+  Heap(const Heap&) = default;
+  template <typename Iterator> Heap(Iterator, Iterator, size_t = 2);
+  Heap(size_t k)
+    : _k(k) {}
+
+  void push(const Type&);
+  void pop();
+  Type top() const {
+    return _data.front();
+  }
+  size_t size() const {
+    return _data.size();
+  }
+  bool empty() const {
+    return size() == 0;
+  }
+  auto data() const {
+    return _data;
+  }
+  void clear() {
+    _data.clear();
+  }
+
 private:
   void sift_up(size_t);
   void sift_down(size_t);
-  void realloc();
   inline size_t parent(size_t) const;
   inline size_t child(size_t, size_t) const;
 
-  size_t size;
-  size_t k;
-  size_t capacity;
-  Type* data;
+  size_t _k = 2;  // TODO: can it be const?
+  std::vector<Type> _data;
 };
 
-template <typename Type>
-Heap<Type>::Heap() {
-  this->k = 2;
-  this->capacity = 16;
-  this->size = 0;
-  this->data = new Type[this->capacity];
-}
-
-template <typename Type>
-Heap<Type>::Heap(const Type* const array, const size_t len, const size_t k) {
-  this->k = k;
-  this->size = len;
-  this->capacity = len;
-  this->data = new Type[this->capacity];
-  for (size_t i = 0; i < len; ++i) {
-    data[i] = array[i];
+template <typename Type, class Compare>
+template <typename Iterator>
+Heap<Type, Compare>::Heap(Iterator begin, Iterator end, size_t k)
+  : _k(k) {
+  while (begin != end) {
+    _data.push_back(*begin);
+    ++begin;
   }
-  for (size_t i = len; 0 < i; --i) {
-    this->sift_up(i - 1);
+  for (size_t i = _data.size(); i > 0; --i) {
+    sift_up(i - 1);
   }
 }
 
-template <typename Type>
-Heap<Type>::~Heap() {
-  delete[] this->data;
+template <typename Type, class Compare>
+void Heap<Type, Compare>::push(const Type& val) {
+  _data.push_back(val);
+  sift_up(size() - 1);
 }
 
-template <typename Type>
-Type Heap<Type>::get_max() const {
-  return this->data[0];
-}
-
-template <typename Type>
-void Heap<Type>::add(const Type& val) {
-  if (this->size + 1 >= this->capacity) {
-    this->realloc();
-  }
-  this->data[this->size] = val;
-  this->sift_up(this->size);
-  ++this->size;
-}
-
-template <typename Type>
-void Heap<Type>::del_max() {
-  if (this->size < 2) {
+template <typename Type, class Compare>
+void Heap<Type, Compare>::pop() {
+  if (empty()) {
     return;
   }
-  --this->size;
-  this->data[0] = this->data[this->size];
-  this->sift_down(0);
-}
-
-template <typename Type>
-void Heap<Type>::sift_up(size_t iter) {
-  auto& a = this->data[iter];
-  auto& b = this->data[parent(iter)];
-  if (a > b) {
-    auto tmp = a;
-    a = b;
-    b = tmp;
-    this->sift_up(parent(iter));
+  _data.front() = _data.back();
+  _data.pop_back();
+  if (!empty()) {
+    sift_down(0);
   }
 }
 
-template <typename Type>
-void Heap<Type>::sift_down(size_t iter) {
-  if (iter >= this->size) {
-    return;
+template <typename Type, class Compare>
+void Heap<Type, Compare>::sift_up(size_t iter) {
+  auto& a = _data[iter];
+  auto& b = _data[parent(iter)];
+  if (Compare()(a, b)) {
+    using std::swap;
+    swap(a, b);
+    sift_up(parent(iter));
   }
-  auto i = 0;
-  auto max = iter;
-  while (true) {
-    auto child = this->child(iter, i);
-    if (child == 0) {
-      break;
+}
+
+template <typename Type, class Compare>
+void Heap<Type, Compare>::sift_down(size_t iter) {
+  auto iter_min = iter;
+  auto iter_child = child(iter, 0);
+  for (size_t i = 0; i < _k && 0 < iter_child && iter_child < size(); ++i) {
+    if (Compare()(_data[iter_child], _data[iter_min])) {
+      iter_min = iter_child;
     }
-    if (this->data[child] > this->data[max]) {
-      max = child;
-    }
-    ++i;
+    ++iter_child;
   }
-  if (max == iter) {
+  if (iter_min == iter) {
     return;
   }
-  auto tmp = this->data[max];
-  this->data[max] = this->data[iter];
-  this->data[iter] = tmp;
-  this->sift_down(max);
+  using std::swap;
+  swap(_data[iter_min], _data[iter]);
+  sift_down(iter_min);
 }
 
-template <typename Type>
-void Heap<Type>::realloc() {
-  size_t new_capacity = 2 * this->capacity;
-  Type* new_data = new Type[new_capacity];
-  for (size_t i = 0; i < this->capacity; ++i) {
-    new_data[i] = this->data[i];
-  }
-  delete[] this->data;
-  this->data = new_data;
-  this->capacity = new_capacity;
-}
-
-template <typename Type>
-size_t Heap<Type>::parent(size_t iter) const {
-  if (iter == 0) {
-    return 0;
-  }
-  return ((iter + 1) / this->k) - 1;
+template <typename Type, class Compare>
+size_t Heap<Type, Compare>::parent(size_t iter) const {
+  return iter == 0 ? 0 : (iter - 1) / _k;
+  // return iter == 0 ? 0 : ((iter + 1) / _k) - 1;
 }
 
 // number in [0, k-1].
-template <typename Type>
-size_t Heap<Type>::child(size_t iter, size_t number) const {
-  auto ans = ((iter + 1) * this->k + number) - 1;
-  if (ans >= this->size) {
-    return 0;
-  }
-  return ans;
+template <typename Type, class Compare>
+size_t Heap<Type, Compare>::child(size_t iter, size_t number) const {
+  const auto ans = iter * _k + number + 1;
+  // const auto ans = ((iter + 1) * _k + number) - 1;
+  return ans >= size() ? 0 : ans;
 }
+
+} // namespace pkr
