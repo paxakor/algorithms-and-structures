@@ -106,14 +106,12 @@ void Heap<Type, Compare>::sift_down(size_t iter) {
 template <typename Type, class Compare>
 size_t Heap<Type, Compare>::parent(size_t iter) const {
   return iter == 0 ? 0 : (iter - 1) / _k;
-  // return iter == 0 ? 0 : ((iter + 1) / _k) - 1;
 }
 
 // number in [0, k-1].
 template <typename Type, class Compare>
 size_t Heap<Type, Compare>::child(size_t iter, size_t number) const {
   const auto ans = iter * _k + number + 1;
-  // const auto ans = ((iter + 1) * _k + number) - 1;
   return ans >= size() ? 0 : ans;
 }
 
