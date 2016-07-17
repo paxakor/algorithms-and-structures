@@ -1,4 +1,8 @@
+// Copyright 2016, Pavel Korozevtsev.
+
 #include "str_algo.hpp"
+
+namespace pkr {
 
 std::vector<size_t> prefix_function(const std::string& str) {
   const size_t n = str.size();
@@ -59,3 +63,5 @@ std::vector<size_t> find(const std::string& pattern, const std::string& str) {
   }
   return res;
 }
+
+} // namespace pkr

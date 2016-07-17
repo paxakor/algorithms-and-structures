@@ -8,7 +8,7 @@ int main(int argc, char const *argv[]) {
   for (auto& x : numbers) {
     std::cin >> x;
   }
-  SegmentTree<int> st(numbers.begin(), numbers.end());
+  pkr::SegmentTree<int> st(numbers.begin(), numbers.end());
   int m;
   std::cin >> m;
   for (int i = 0; i < m; ++i) {

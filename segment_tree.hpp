@@ -5,6 +5,8 @@
 #include <vector>
 #include "utils/arena.hpp"
 
+namespace pkr {
+
 template <typename Type>
 class SumClass {
 public:
@@ -108,3 +110,5 @@ UInt get_max_lower_pow2(UInt n) {
   }
   return res;
 }
+
+} // namespace pkr

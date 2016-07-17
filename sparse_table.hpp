@@ -1,8 +1,12 @@
+// Copyright 2016, Pavel Korozevtsev.
+
 #pragma once
 
 #include <cinttypes>
 #include <cmath>
 #include <vector>
+
+namespace pkr {
 
 template <typename Type, class Compare = std::less<Type> >
 class SparseTable {
@@ -67,3 +71,5 @@ void SparseTable<Type, Compare>::precalc(size_t size) {
     pow2 *= 2;
   }
 }
+
+} // namespace pkr

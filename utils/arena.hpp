@@ -4,6 +4,8 @@
 
 #include <vector>
 
+namespace pkr {
+
 template <typename Type>
 class Arena {
 public:
@@ -22,3 +24,5 @@ public:
 private:
   std::vector<Type*> _storage;
 };
+
+} // namespace pkr

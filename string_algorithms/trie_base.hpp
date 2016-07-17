@@ -1,9 +1,13 @@
+// Copyright 2016, Pavel Korozevtsev.
+
 #pragma once
 
 #include <cstddef>
 #include <vector>
 #include <string>
 #include <unordered_map>
+
+namespace pkr {
 
 class Node {
 public:
@@ -22,3 +26,5 @@ public:
   bool find(const std::string&) const;
   std::vector<Node> nodes;
 };
+
+} // namespace pkr

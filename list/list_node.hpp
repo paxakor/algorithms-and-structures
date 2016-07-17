@@ -1,3 +1,5 @@
+// Copyright 2016, Pavel Korozevtsev.
+
 #pragma once
 
 namespace pkr {

@@ -1,4 +1,8 @@
+// Copyright 2016, Pavel Korozevtsev.
+
 #include "trie.hpp"
+
+namespace pkr {
 
 Node::Node()
   : term(false)
@@ -47,3 +51,5 @@ bool Trie::find(const std::string& str) const {
   }
   return this->nodes[node_iter].term == true;
 }
+
+} // namespace pkr

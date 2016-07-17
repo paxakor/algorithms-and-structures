@@ -8,7 +8,7 @@ int main(int argc, char const *argv[]) {
   for (auto& x : numbers) {
     std::cin >> x;
   }
-  SparseTable<int> st(numbers.begin(), numbers.end());
+  pkr::SparseTable<int> st(numbers.begin(), numbers.end());
   int m;
   std::cin >> m;
   for (int i = 0; i < m; ++i) {
