@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "segment_tree/segment_tree.hpp"
+#include "segment_tree.hpp"
 
 int main(int argc, char const *argv[]) {
   int n;
