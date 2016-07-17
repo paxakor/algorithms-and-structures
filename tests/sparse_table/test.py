@@ -19,5 +19,4 @@ for i in range(m):
   r = randint(0, n - 1)
   l, r = min(l, r), max(l, r)
   print(l, r, file = f)
-  print(l, r, file = a)
   print(min(v[l:r+1]), file = a)
