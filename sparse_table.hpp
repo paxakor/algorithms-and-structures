@@ -38,7 +38,8 @@ private:
 
 template <typename Type, class Compare>
 template <typename InputIterator>
-SparseTable<Type, Compare>::SparseTable(InputIterator begin, InputIterator end) {
+SparseTable<Type, Compare>::SparseTable(InputIterator begin,
+                                        InputIterator end) {
   std::vector<Type> bottom(begin, end);
   const size_t size = bottom.size();
   _table.resize(llround(log2(size)) + 1);
