@@ -51,11 +51,8 @@ private:
 template <typename Type, class Compare>
 template <typename InputIterator>
 Heap<Type, Compare>::Heap(InputIterator begin, InputIterator end, size_t k)
-  : _k(k) {
-  while (begin != end) {
-    _data.push_back(*begin);
-    ++begin;
-  }
+  : _k(k)
+  , _data(begin, end) {
   for (size_t i = _data.size(); i > 0; --i) {
     sift_up(i - 1);
   }
