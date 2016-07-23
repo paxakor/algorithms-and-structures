@@ -22,7 +22,8 @@ public:
     init(array, len);
   }
 
-  template <typename Iterator> SegmentTree(Iterator begin, Iterator end) {
+  template <typename InputIterator> SegmentTree(InputIterator begin,
+                                                InputIterator end) {
     const std::vector<Type> elems(begin, end);
     init(elems.data(), elems.size());
   }

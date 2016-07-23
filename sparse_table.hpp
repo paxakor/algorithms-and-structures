@@ -11,7 +11,8 @@ namespace pkr {
 template <typename Type, class Compare = std::less<Type> >
 class SparseTable {
 public:
-  template <typename Iterator> SparseTable(Iterator begin, Iterator end);
+  template <typename InputIterator>
+  SparseTable(InputIterator begin, InputIterator end);
 
   // find best in [left, right)
   inline Type get(size_t left, size_t right) const {
@@ -36,8 +37,8 @@ private:
 };
 
 template <typename Type, class Compare>
-template <typename Iterator>
-SparseTable<Type, Compare>::SparseTable(Iterator begin, Iterator end) {
+template <typename InputIterator>
+SparseTable<Type, Compare>::SparseTable(InputIterator begin, InputIterator end) {
   std::vector<Type> bottom(begin, end);
   const size_t size = bottom.size();
   _table.resize(llround(log2(size)) + 1);

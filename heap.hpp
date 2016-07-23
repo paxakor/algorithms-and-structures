@@ -13,7 +13,10 @@ class Heap {
 public:
   Heap() = default;
   Heap(const Heap&) = default;
-  template <typename Iterator> Heap(Iterator, Iterator, size_t = 2);
+
+  template <typename InputIterator>
+  Heap(InputIterator, InputIterator, size_t = 2);
+
   Heap(size_t k)
     : _k(k) {}
 
@@ -46,8 +49,8 @@ private:
 };
 
 template <typename Type, class Compare>
-template <typename Iterator>
-Heap<Type, Compare>::Heap(Iterator begin, Iterator end, size_t k)
+template <typename InputIterator>
+Heap<Type, Compare>::Heap(InputIterator begin, InputIterator end, size_t k)
   : _k(k) {
   while (begin != end) {
     _data.push_back(*begin);
