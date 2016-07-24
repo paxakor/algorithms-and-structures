@@ -15,60 +15,59 @@ public:
   void clear();
 private:
   void resize(uint64_t);
-  Type* data;
-  uint64_t size;
-  uint64_t capacity;
+  Type* _data;
+  uint64_t _size;
+  uint64_t _capacity;
 };
 
 template <typename Type>
-Stack<Type>::Stack() {
-  this->capacity = BASE_CAPACITY;
-  this->data = new Type[this->capacity];
-  this->size = 0;
-}
+Stack<Type>::Stack()
+  : _capacity(BASE_CAPACITY)
+  , _data(new Type[_capacity])
+  , _size(0){}
 
 template <typename Type>
 Stack<Type>::~Stack() {
-  delete[] this->data;
+  delete[] _data;
 }
 
 template <typename Type>
 Type Stack<Type>::pop() {
-  --this->size;
-  return this->data[this->size];
+  --_size;
+  return _data[_size];
 }
 
 template <typename Type>
 void Stack<Type>::push(const Type& val) {
-  if (this->size + 1 < this->capacity) {
-    this->data[this->size] = val;
-    ++this->size;
+  if (_size + 1 < _capacity) {
+    _data[_size] = val;
+    ++_size;
   } else {
-    this->resize(this->capacity * 2);
-    this->push(val);
+    _resize(_capacity * 2);
+    _push(val);
   }
 }
 
 template <typename Type>
 bool Stack<Type>::empty() const {
-  return this->size == 0;
+  return _size == 0;
 }
 
 template <typename Type>
 void Stack<Type>::clear() {
-  this->size = 0;
-  delete[] this->data;
-  this->capacity = BASE_CAPACITY;
-  this->data = new Type[this->capacity];
+  _size = 0;
+  delete[] _data;
+  _capacity = BASE_CAPACITY;
+  _data = new Type[_capacity];
 }
 
 template <typename Type>
 void Stack<Type>::resize(uint64_t new_capacity) {
   auto new_data = new Type[new_capacity];
-  for (uint64_t i = 0; i < this->size && i < new_capacity; ++i) {
-    new_data[i] = this->data[i];
+  for (uint64_t i = 0; i < _size && i < new_capacity; ++i) {
+    new_data[i] = _data[i];
   }
-  delete[] this->data;
-  this->data = new_data;
-  this->capacity = new_capacity;
+  delete[] _data;
+  _data = new_data;
+  _capacity = new_capacity;
 }
