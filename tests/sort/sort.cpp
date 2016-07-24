@@ -2,15 +2,16 @@
 #include <iostream>
 #include "list.hpp"
 #include "algo/sort.hpp"
+#include "algo/sort_parallel.hpp"
 #include "utils/random.hpp"
-#include "tests/stopwatch.h"
+#include "utils/stopwatch.hpp"
 
 using UInt = uint16_t;
 
 #define TEST(sort_algo)                                     \
 {                                                           \
   auto t = v;                                               \
-  Stopwatch sw(#sort_algo);                                 \
+  pkr::StopwatchReal sw(#sort_algo);                        \
   sort_algo(t.begin(), t.end());                            \
   sw.end();                                                 \
   if (print) {                                              \
@@ -38,6 +39,7 @@ int main() {
   TEST(pkr::counting_sort);
   TEST(pkr::merge_sort);
   TEST(pkr::heap_sort);
+  TEST(pkr::merge_sort_parallel);
   if (n < 20000) {
     TEST(pkr::insertion_sort);
   }

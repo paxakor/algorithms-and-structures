@@ -18,5 +18,5 @@ Here I will store implementations of interesting algorithms and structures.
   + Counting sort
   + Heap sort
   + Insertion sort
-  + Merge sort
+  + Merge sort (+ concurrent version)
   + Radix sort
