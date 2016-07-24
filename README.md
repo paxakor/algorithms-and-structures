@@ -14,3 +14,9 @@ Here I will store implementations of interesting algorithms and structures.
 * Sparse table
 * Stack
 * Trie
+* Sorting algorithms:
+  + Counting sort
+  + Heap sort
+  + Insertion sort
+  + Merge sort
+  + Radix sort
