@@ -1,6 +1,6 @@
 // Copyright 2016, Pavel Korozevtsev.
 
-#include "BloomFilterBase.hpp"
+#include "bloom_filter_base.hpp"
 
 template <typename Type>
 class BloomFilter : public BloomFilterBase {
