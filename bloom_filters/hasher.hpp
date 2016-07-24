@@ -3,6 +3,7 @@
 #pragma once
 
 #include <functional>
+#include <vector>
 #include "utils/random.hpp"
 
 namespace pkr {
@@ -24,7 +25,7 @@ public:
 
 private:
   // hash for standart types.
-  // you should implement your self functor for other types.
+  // you should implement your own functor for other types.
   std::hash<Type> _std_hash;
 
   // array of random masks

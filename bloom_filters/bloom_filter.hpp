@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <vector>
 #include "bloom_filter_base.hpp"
 
 namespace pkr {
