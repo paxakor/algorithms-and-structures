@@ -53,8 +53,8 @@ template <typename InputIterator>
 Heap<Type, Compare>::Heap(InputIterator begin, InputIterator end, size_t k)
   : _k(k)
   , _data(begin, end) {
-  for (size_t i = _data.size(); i > 0; --i) {
-    sift_up(i - 1);
+  for (size_t i = 0; i < _data.size(); ++i) {
+    sift_up(i);
   }
 }
 
@@ -91,7 +91,7 @@ template <typename Type, class Compare>
 void Heap<Type, Compare>::sift_down(size_t iter) {
   auto iter_min = iter;
   auto iter_child = child(iter, 0);
-  for (size_t i = 0; i < _k && 0 < iter_child && iter_child < size(); ++i) {
+  for (size_t i = 0; i < _k && iter_child < size(); ++i) {
     if (Compare()(_data[iter_child], _data[iter_min])) {
       iter_min = iter_child;
     }
@@ -113,8 +113,9 @@ size_t Heap<Type, Compare>::parent(size_t iter) const {
 // number in [0, k-1].
 template <typename Type, class Compare>
 size_t Heap<Type, Compare>::child(size_t iter, size_t number) const {
-  const auto ans = iter * _k + number + 1;
-  return ans >= size() ? 0 : ans;
+  // const auto ans = iter * _k + number + 1;
+  // return ans >= size() ? 0 : ans;
+  return iter * _k + number + 1;
 }
 
 } // namespace pkr
