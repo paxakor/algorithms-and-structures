@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include <cstddef>
 #include <functional>
+#include <utility>
 #include <vector>
 
 namespace pkr {
@@ -17,7 +17,7 @@ public:
   template <typename InputIterator>
   Heap(InputIterator, InputIterator, size_t = 2);
 
-  Heap(size_t k)
+  explicit Heap(size_t k)
     : _k(k) {}
 
   void push(const Type&);
@@ -118,4 +118,4 @@ size_t Heap<Type, Compare>::child(size_t iter, size_t number) const {
   return iter * _k + number + 1;
 }
 
-} // namespace pkr
+}  // namespace pkr

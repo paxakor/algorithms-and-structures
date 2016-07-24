@@ -4,9 +4,11 @@
 
 #include <cinttypes>
 #include <algorithm>
+#include <functional>
 #include <iterator>
 #include <map>
 #include <type_traits>
+#include <utility>
 #include "heap.hpp"
 
 namespace pkr {
@@ -23,7 +25,7 @@ void heap_sort(ForwardIterator begin, ForwardIterator end, Compare comp) {
 
 template <typename ForwardIterator>
 void heap_sort(ForwardIterator begin, ForwardIterator end) {
-  using Type = typename std::remove_reference<decltype(*begin)>::type; 
+  using Type = typename std::remove_reference<decltype(*begin)>::type;
   heap_sort(begin, end, std::less<Type>{});
 }
 
@@ -166,4 +168,4 @@ void counting_sort(ForwardIterator begin, ForwardIterator end) {
   counting_sort(begin, end, std::less<Type>{});
 }
 
-} //  namespace pkr
+}  //  namespace pkr

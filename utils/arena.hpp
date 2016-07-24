@@ -25,4 +25,4 @@ private:
   std::vector<Type*> _storage;
 };
 
-} // namespace pkr
+}  // namespace pkr

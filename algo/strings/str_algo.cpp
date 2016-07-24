@@ -1,5 +1,7 @@
 // Copyright 2016, Pavel Korozevtsev.
 
+#include <string>
+#include <vector>
 #include "str_algo.hpp"
 
 namespace pkr {
@@ -64,4 +66,4 @@ std::vector<size_t> find(const std::string& pattern, const std::string& str) {
   return res;
 }
 
-} // namespace pkr
+}  // namespace pkr

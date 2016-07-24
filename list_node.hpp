@@ -8,7 +8,7 @@ template <typename Type>
 class ListNode {
 public:
   ListNode();
-  ListNode(const Type&);
+  explicit ListNode(const Type&);
   ~ListNode();
   const ListNode& operator=(const ListNode<Type>&);
   const Type& value() const;
@@ -89,4 +89,4 @@ void ListNode<Type>::clear() {
   clear_next();
 }
 
-}
+}  // namespace pkr

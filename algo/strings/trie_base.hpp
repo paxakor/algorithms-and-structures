@@ -12,7 +12,7 @@ namespace pkr {
 class Node {
 public:
   Node();
-  Node(size_t);
+  explicit Node(size_t);
   Node(const Node&);
   size_t parent;
   std::unordered_map<char, size_t> children;
@@ -27,4 +27,4 @@ public:
   std::vector<Node> nodes;
 };
 
-} // namespace pkr
+}  // namespace pkr

@@ -11,7 +11,6 @@ namespace pkr {
 template <typename Type>
 class List {
 public:
-
   using Iterator = ListNode<Type>*;
 
   List();
@@ -102,7 +101,8 @@ void List<Type>::push_back(const Type& val) {
 }
 
 template <typename Type>
-void List<Type>::insert_before(typename List<Type>::Iterator ptr, const Type& val) {
+void List<Type>::insert_before(typename List<Type>::Iterator ptr,
+                               const Type& val) {
   auto new_nd = new ListNode<Type>(val);
   new_nd->set_prev(ptr->prev());
   new_nd->set_next(ptr);
@@ -114,7 +114,8 @@ void List<Type>::insert_before(typename List<Type>::Iterator ptr, const Type& va
 }
 
 template <typename Type>
-void List<Type>::insert_after(typename List<Type>::Iterator ptr, const Type& val) {
+void List<Type>::insert_after(typename List<Type>::Iterator ptr,
+                              const Type& val) {
   auto new_nd = new ListNode<Type>(val);
   new_nd->set_prev(ptr);
   new_nd->set_next(ptr->next());
@@ -169,4 +170,4 @@ std::vector<Type> List<Type>::to_vector() const {
   return res;
 }
 
-}
+}  // namespace pkr

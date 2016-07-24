@@ -4,6 +4,7 @@
 
 #include <cinttypes>
 #include <cmath>
+#include <functional>
 #include <vector>
 
 namespace pkr {
@@ -74,4 +75,4 @@ void SparseTable<Type, Compare>::precalc(size_t size) {
   }
 }
 
-} // namespace pkr
+}  // namespace pkr

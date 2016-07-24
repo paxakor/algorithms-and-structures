@@ -112,4 +112,4 @@ UInt get_max_lower_pow2(UInt n) {
   return res;
 }
 
-} // namespace pkr
+}  // namespace pkr

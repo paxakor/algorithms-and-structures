@@ -1,3 +1,5 @@
+// Copyright 2016, Pavel Korozevtsev.
+
 #pragma once
 
 #define BASE_CAPACITY 2
