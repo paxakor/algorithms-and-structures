@@ -9,18 +9,22 @@
 
 namespace pkr {
 
-template <bool need_real_time>
+template <bool verbose, bool need_real_time>
 class StopwatchImpl {
 public:
-  explicit StopwatchImpl(const std::string& new_name)
-  : _name(new_name)
+  explicit StopwatchImpl(const std::string& name)
+  : _name(name)
   , _start_cpu(clock())
   , _start_real(std::chrono::system_clock::now()) {
-    std::cout << "Start " << _name << std::endl;
+    if (verbose) {
+      std::cout << "Start " << _name << std::endl;
+    }
   }
 
   void end() {
-    std::cout << _name << " ended in " << get() << " seconds" << std::endl;
+    if (verbose) {
+      std::cout << _name << " ended in " << get() << " seconds" << std::endl;
+    }
     _ended = true;
   }
 
@@ -55,7 +59,7 @@ private:
   bool _ended = false;
 };
 
-using Stopwatch = StopwatchImpl<false>;
-using StopwatchReal = StopwatchImpl<true>;
+using Stopwatch = StopwatchImpl<true, false>;
+using StopwatchReal = StopwatchImpl<true, true>;
 
 }  // namespace pkr
