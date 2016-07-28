@@ -23,7 +23,6 @@ private:
   size_t _m;
   const double _max_fill_ratio;
   std::vector< BloomFilter<Type, Hash> > _table;
-  static constexpr size_t _check_frequency = 16;
 };
 
 template <typename Type, class Hash>
