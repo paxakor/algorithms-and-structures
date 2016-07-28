@@ -11,7 +11,7 @@ class BloomFilterBase {
 public:
   virtual ~BloomFilterBase() {}
   virtual void insert(const Type&) = 0;
-  virtual bool find(const Type&) = 0;
+  virtual bool find(const Type&) const = 0;
 };
 
 }  // namespace pkr
