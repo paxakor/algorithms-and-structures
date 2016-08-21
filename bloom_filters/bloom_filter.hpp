@@ -45,7 +45,7 @@ template <typename Type, class Hash>
 bool BloomFilter<Type, Hash>::find(const Type& value) const {
   for (size_t i = 0; i < _k; ++i) {
     const size_t hash_id = _hasher(value, i) % _m;
-    if (_line[hash_id] == false) {
+    if (!_line[hash_id]) {
       return false;
     }
   }

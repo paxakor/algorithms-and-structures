@@ -42,12 +42,11 @@ std::vector<bool> run_std_set(const std::vector<Type>& test_data) {
   return res;
 }
 
-template <typename BF>
 TestResult run_bf(const size_t k,
                   const size_t m,
                   const std::vector<Type>& test_data,
-                  const std::vector<bool>& truth) {
-  BF bf(k, m, 0.1);
+                  const std::vector<bool>& truth,
+                  pkr::BloomFilterBase<Type>* const bf) {
   size_t errors = 0;
   size_t hms = 0;
   const auto n = test_data.size();
@@ -56,7 +55,7 @@ TestResult run_bf(const size_t k,
     const auto x = test_data[i];
     if (i % 2) {
       bool x_in_st = truth[i / 2];
-      bool x_in_bf = bf.find(x);
+      bool x_in_bf = bf->find(x);
       if (!x_in_bf && x_in_st) {
         ++errors;
       }
@@ -64,12 +63,12 @@ TestResult run_bf(const size_t k,
         ++hms;
       }
     } else {
-      bf.insert(x);
+      bf->insert(x);
     }
   }
   if (errors) {
     std::cerr << "ACHTUNG! errors: " << errors
-      << " (in " << typeid(BF).name() << ")" << std::endl;
+      << " (in " << typeid(bf).name() << ")" << std::endl;
   }
   const double fp_rate = static_cast<double>(hms) / n;
   return {k, m, sw.get(), fp_rate};
@@ -82,8 +81,10 @@ int main(int argc, const char** argv) {
   std::vector<TestResult> results;
   for (size_t k = 2; k < 20; k += 2) {
     for (size_t m = 10'000; m < 80'000'000 * k; m *= 4) {
+      pkr::BloomFilterBase<Type>* bf = new pkr::ScalableBloomFilter<Type>(k, m);
       const auto res =
-        run_bf<pkr::ScalableBloomFilter<Type>>(k, m, test_data, truth);
+        run_bf(k, m, test_data, truth, bf);
+      delete bf;
       results.push_back(res);
     }
     std::cout << "." << std::flush;
