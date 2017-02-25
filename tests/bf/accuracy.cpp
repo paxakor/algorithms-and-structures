@@ -4,7 +4,7 @@
 #include <typeinfo>
 #include "bloom_filters/bloom_filter.hpp"
 #include "bloom_filters/scalable_bloom_filter.hpp"
-#include "bloom_filters/stable_bloom_filter.hpp"
+// #include "bloom_filters/stable_bloom_filter.hpp"
 #include "utils/random.hpp"
 
 using Type = size_t;
@@ -49,9 +49,10 @@ int main(int argc, const char** argv) {
   constexpr size_t n = 100'000;
   for (size_t k = 2; k < 20; k += 2) {
     for (size_t m = 10'000; m < 80'000 * k; m *= 4) {
-      for (size_t p = 1'000; p < 50'000; p *= 2) {
+      for (size_t p = 1'000; p == 1'000 && p < 50'000; p *= 2) {
         pkr::BloomFilterBase<Type>* bf =
-          new pkr::StableBloomFilter<Type>(k, m, p);
+          // new pkr::StableBloomFilter<Type>(k, m, p);
+          new pkr::BloomFilter<Type>(k, m);
         const auto a = test_fp(bf, n);
         delete bf;
         if (need_save_to_file) {
